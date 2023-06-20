@@ -9,4 +9,5 @@ Train a deep neural network to track a specific individual via facial recognitio
 2. Code the skeleton of the system including: connecting/configuring the drone; the model as a black box (input: image, output: bounding box); control based on detections and drone state
 3. Train a low-latency model on a few images (find a suitable SAM-like labelling tool)
 4. Code, code, code (and evaluate)
-5. Test in real life
+5. Optimise model using TensorRT
+6. Test in real life
