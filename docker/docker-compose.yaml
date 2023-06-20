@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  tello-drone:
+    build:
+      context: ../docker
+      dockerfile: Dockerfile
+    volumes:
+      - data:/home/ubuntu/data
+    runtime: nvidia
+
+volumes:
+  data:
