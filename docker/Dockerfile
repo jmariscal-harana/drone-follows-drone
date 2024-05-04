@@ -1,3 +1,6 @@
-FROM nvcr.io/nvidia/pytorch:23.05-py3
+FROM pachyderm/opencv
+
+RUN adduser ubuntu --disabled-password
+RUN sudo usermod -aG sudo ubuntu
 USER ubuntu
 WORKDIR /home/ubuntu/

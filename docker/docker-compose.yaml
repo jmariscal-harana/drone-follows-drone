@@ -1,13 +1,14 @@
 version: "3.9"
 
 services:
-  tello-drone:
+  drone-follows-drone:
+    tty: true
     build:
       context: ../docker
       dockerfile: Dockerfile
     volumes:
       - data:/home/ubuntu/data
-    runtime: nvidia
+    # runtime: nvidia
 
 volumes:
   data:
