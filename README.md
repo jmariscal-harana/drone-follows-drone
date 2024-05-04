@@ -27,3 +27,6 @@ For the first iteration, I have decided to go for the simplest combination as a 
 2. Code the skeleton of the system including: connecting/configuring the drone; the model as a black box (input: image, output: bounding box); control based on detections and drone state
 3. Identify a traditional object tracking algorithm and visualise it
 4. Write a simple algorithm that uses the bounding boxes to send commands to the drone
+
+# References
+- https://github.com/fvilmos/tello_object_tracking
