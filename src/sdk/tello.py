@@ -82,17 +82,17 @@ class Tello:
         self.sock_state.bind(self.stateaddr)
 
         # start receive thread
-        self.receiverThread = safethread.SafeThread(target=self.__receive)
+        self.receiverThread = SafeThread(target=self.__receive)
         #self.receiverThread.daemon = True
         
         # send periodic commands
-        self.eventThread = safethread.SafeThread(target=self.__periodic_cmd)
+        self.eventThread = SafeThread(target=self.__periodic_cmd)
         
         # start video thread
-        self.videoThread = safethread.SafeThread(target=self.__video)
+        self.videoThread = SafeThread(target=self.__video)
 
         # start video thread
-        self.stateThread = safethread.SafeThread(target=self.__state_receive)
+        self.stateThread = SafeThread(target=self.__state_receive)
 
     def set_image_size(self, image_size=(960,720)):
         """Set size of the aptured image
@@ -200,16 +200,16 @@ class Tello:
         """Start low level communication
         """
         # start communication / listens to UDP
-        if self.receiverThread.isAlive() is not True: self.receiverThread.start()
-        if self.eventThread.isAlive() is not True:  self.eventThread.start()
-        if self.stateThread.isAlive() is not True:  self.stateThread.start()
+        if self.receiverThread.is_alive() is not True: self.receiverThread.start()
+        if self.eventThread.is_alive() is not True:  self.eventThread.start()
+        if self.stateThread.is_alive() is not True:  self.stateThread.start()
         
 
     def start_video(self):
         """Start video stram
         """
         self.send_cmd('streamon')
-        if self.videoThread.isAlive() is not True:  self.videoThread.start()
+        if self.videoThread.is_alive() is not True:  self.videoThread.start()
 
     def stop_video(self):
         """Stop video stream
