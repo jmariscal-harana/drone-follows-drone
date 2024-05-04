@@ -1,13 +1,29 @@
-# tello-drone
-Playing around with Tello drones and deep learning.
+# Objective
+Welcome to my new drone project! I want to get a Tello drone to follow another Tello drone autonomously. While the idea is simple, there are many avenues to explore!
 
-## Objective
-Train a deep neural network to track a specific individual via facial recognition.
+# Project structure
+There are three different elements that I will work on in parallel: object tracking, drone control, and real-time.
 
-## Steps
-1. Think about the system structure
+## Object tracking
+- Traditional methods
+- Deep learning methods
+  - YOLO-based tracker (easier)
+  - State-of-the-art tracker (harder)  
+
+## Control
+- Simple logic based on bounding box size and centre
+- Kalman filters
+- Deep learning (what!?)
+
+## Fast feedback
+- Is it required? (identify any SDK bottlenecks)
+- C++
+- SDK hacking
+
+For the first iteration, I have decided to go for the simplest combination as a fast way to start testing: a traditional method for object tracking + a simple algorithm for drone control.
+
+# Steps
+1. Think about the code structure
 2. Code the skeleton of the system including: connecting/configuring the drone; the model as a black box (input: image, output: bounding box); control based on detections and drone state
-3. Train a low-latency model on a few images (find a suitable SAM-like labelling tool)
-4. Code, code, code (and evaluate)
-5. Optimise model using TensorRT
-6. Test in real life
+3. Identify a traditional object tracking algorithm and visualise it
+4. Write a simple algorithm that uses the bounding boxes to send commands to the drone
