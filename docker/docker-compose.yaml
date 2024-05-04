@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   drone-follows-drone:
     tty: true
@@ -7,6 +5,7 @@ services:
       context: ../docker
       dockerfile: Dockerfile
     volumes:
+      - ../:/home/ubuntu/drone-follows-drone
       - data:/home/ubuntu/data
     # runtime: nvidia
 
