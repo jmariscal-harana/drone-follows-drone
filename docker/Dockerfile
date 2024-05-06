@@ -2,7 +2,7 @@ FROM python
 
 RUN apt-get update && \
     apt-get -y install sudo && \
-    && apt-get install ffmpeg libsm6 libxext6  -y
+    apt-get -y install ffmpeg libsm6 libxext6
 
 RUN pip install opencv-python
 

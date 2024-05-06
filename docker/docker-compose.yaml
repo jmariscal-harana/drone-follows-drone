@@ -8,6 +8,19 @@ services:
       - ../:/home/ubuntu/drone-follows-drone
       - data:/home/ubuntu/data
     # runtime: nvidia
+    ports:
+    - target: 8889
+      published: 8889
+      protocol: udp
+      mode: host
+    - target: 8890
+      published: 8890
+      protocol: udp
+      mode: host
+    - target: 11111
+      published: 11111
+      protocol: udp
+      mode: host
 
 volumes:
   data:
