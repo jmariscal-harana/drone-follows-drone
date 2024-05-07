@@ -3,14 +3,14 @@ from time import sleep
 
 from src.control.drone_control import DroneControl
 from src.sdk.drone_sdk import DroneSDK
-from src.tracking.drone_tracking import DroneTracking
+from src.tracker.drone_tracker import DroneTracker
 
 class DroneInterface:
     def __init__(self) -> None:
         """Initialise the drone interface -> provides access to drone state and video stream."""
         print("Interface init!")
         self.sdk = DroneSDK()
-        self.tracking = DroneTracking()
+        self.tracker = DroneTracker(tracker_type="BOOSTING")
         self.control = DroneControl()
 
     def close(self) -> None:
@@ -19,7 +19,7 @@ class DroneInterface:
         try:
             self.control.close()
             self.sdk.close()
-            self.tracking.close()
+            self.tracker.close()
             sys.exit(0)
         except Exception as e:
             print(e)
@@ -30,15 +30,19 @@ class DroneInterface:
         print("Running interface!")
 
         self.sdk.start_video()
+        input("Press enter to initialise tracker:")
+        frame = self.sdk.get_latest_frame()
+        self.tracker.track(frame)
+
         while True:
             try:
-                self.sdk.get_state() # state may be older than latest image
-                image = self.sdk.get_latest_image()
-                bounding_box = self.tracking.track(image)
-                command = self.control.control(self.sdk.state, (image, bounding_box))
+                self.sdk.get_state() # state may be older than latest frame
+                frame = self.sdk.get_latest_frame()
+                bounding_box = self.tracker.track(frame)
+                command = self.control.control(self.sdk.state, (frame, bounding_box))
                 # self.sdk.send_command(command)
                 print("Waiting for 5 seconds before next command... Press Ctrl+C to exit.\n")
-                sleep(5)
+                sleep(0.1)
             except KeyboardInterrupt:
                 self.close()
 
