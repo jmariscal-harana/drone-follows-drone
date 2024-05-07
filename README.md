@@ -30,3 +30,15 @@ For the first iteration, I have decided to go for the simplest combination as a 
 
 # References
 - https://github.com/fvilmos/tello_object_tracking
+
+# Docker X11 (MACOS)
+You need to follow some of [these steps](https://stackoverflow.com/questions/75386154/how-to-run-xeyes-in-docker-ubuntu) to enable X11 for your Docker container in MACOS:
+
+- Install XQuartz
+- Start XQuartz
+- Goto XQuartz- > Settings -> Security and select "Authenticate Connections" and "Allow connections from network clients"
+- Restart XQuartz
+
+```
+xhost + localhost
+```
