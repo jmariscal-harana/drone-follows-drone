@@ -1,7 +1,6 @@
 import cv2
 import threading
-from queue import Queue
-from PIL import Image
+from queue import LifoQueue
 from src.sdk.udp.udp import UDPSocket
 
 LOCAL_IP = ''
@@ -20,7 +19,7 @@ class DroneSDK:
         self.command_client = UDPSocket(udp_ip=DRONE_IP, udp_port=COMMAND_PORT, socket_type="client")
         self.send_command("command") # start SDK mode
 
-        self.image_queue = Queue(maxsize=1)
+        self.frame_stack = LifoQueue(maxsize=1)
 
         # TODO
         # self.return_code_thread = threading.Thread(target=self._get_return_code)
@@ -52,9 +51,9 @@ class DroneSDK:
             try: 
                 ret, frame = self.video.read()
                 if ret:
-                    # frame = cv2.resize(frame, self.image_size)           
+                    # frame = cv2.resize(frame, self.frame_size)           
                     self.frame = frame
-                    self.image_queue.put(frame)
+                    self.frame_stack.put(frame)
             except Exception:
                 pass
 
@@ -70,11 +69,11 @@ class DroneSDK:
         print("Stopping video stream!")
         self.send_command('streamoff')
 
-    def get_latest_image(self) -> None:
-        """Get the latest image from the drone."""
-        print("Getting latest image!")
-        return self.image_queue.get()
+    def get_latest_frame(self) -> None:
+        """Get the latest frame from the drone."""
+        print("Getting latest frame!")
+        return self.frame_stack.get()
     
-    def save_image(self, image_array) -> None:
-        cv2.imwrite("image.png", image_array)
+    def save_frame(self, frame_array) -> None:
+        cv2.imwrite("frame.png", frame_array)
         
