@@ -9,8 +9,9 @@ class DroneInterface:
     def __init__(self) -> None:
         """Initialise the drone interface -> provides access to drone state and video stream."""
         print("Interface init!")
+
         self.sdk = DroneSDK()
-        self.tracker = DroneTracker(tracker_type="BOOSTING")
+        self.tracker = DroneTracker(tracker_type="MIL")
         self.control = DroneControl()
 
     def close(self) -> None:
@@ -30,19 +31,19 @@ class DroneInterface:
         print("Running interface!")
 
         self.sdk.start_video()
+
         input("Press enter to initialise tracker:")
         frame = self.sdk.get_latest_frame()
         self.tracker.track(frame)
 
         while True:
             try:
-                self.sdk.get_state() # state may be older than latest frame
+                # self.sdk.get_state() # state may be older than latest frame
                 frame = self.sdk.get_latest_frame()
                 bounding_box = self.tracker.track(frame)
                 command = self.control.control(self.sdk.state, (frame, bounding_box))
                 # self.sdk.send_command(command)
-                print("Waiting for 5 seconds before next command... Press Ctrl+C to exit.\n")
-                sleep(0.1)
+                # sleep(1 / self.video_rate)
             except KeyboardInterrupt:
                 self.close()
 
