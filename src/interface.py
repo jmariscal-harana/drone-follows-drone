@@ -10,6 +10,8 @@ class DroneInterface:
         """Initialise the drone interface -> provides access to drone state and video stream."""
         print("Interface init!")
 
+        self.video_rate = 5  # frames per second
+
         self.sdk = DroneSDK()
         self.tracker = DroneTracker(tracker_type="MIL")
         self.control = DroneControl()
@@ -41,9 +43,9 @@ class DroneInterface:
                 # self.sdk.get_state() # state may be older than latest frame
                 frame = self.sdk.get_latest_frame()
                 bounding_box = self.tracker.track(frame)
-                command = self.control.control(self.sdk.state, (frame, bounding_box))
+                # command = self.control.control(self.sdk.state, (frame, bounding_box))
                 # self.sdk.send_command(command)
-                # sleep(1 / self.video_rate)
+                sleep(1 / self.video_rate)
             except KeyboardInterrupt:
                 self.close()
 
