@@ -4,7 +4,7 @@ class DroneTracker:
     """Implements a range of tracking algorithms."""
     def __init__(self, tracker_type="MIL") -> None:
         """Initialise the drone tracking algorithm."""
-        print("Tracking init!")
+        print("Tracking init...")
         self.tracker_type = tracker_type
 
         if tracker_type == 'BOOSTING':
