@@ -1,11 +1,9 @@
 FROM python
 
-RUN apt-get update && \
-    apt-get -y install sudo && \
-    apt-get -y install ffmpeg libsm6 libxext6 && \
-    apt-get -y install x11-apps
+RUN apt-get update &&\
+    apt-get -y install sudo ffmpeg libsm6 libxext6 x11-apps
 
-RUN pip install opencv-python opencv-contrib-python
+RUN pip install pytest opencv-python opencv-contrib-python
 
 RUN adduser ubuntu --disabled-password
 RUN sudo usermod -aG sudo ubuntu
