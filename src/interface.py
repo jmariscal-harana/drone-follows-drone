@@ -14,15 +14,15 @@ class DroneInterface:
 
         self.sdk = DroneSDK()
         self.tracker = DroneTracker(tracker_type="MIL")
-        self.control = DroneControl()
+        self.control = DroneControl(self.sdk)
 
     def close(self) -> None:
         """Close the drone interface."""
         print("Closing drone interface!")
         try:
             self.control.close()
-            self.sdk.close()
             self.tracker.close()
+            self.sdk.close()
             sys.exit(0)
         except Exception as e:
             print(e)
@@ -32,22 +32,24 @@ class DroneInterface:
         """Run the drone interface."""
         print("Running interface!")
 
-        self.sdk.start_video()
+        try:
+            self.sdk.start_video()
 
-        input("Press enter to initialise tracker:")
-        frame = self.sdk.get_latest_frame()
-        self.tracker.track(frame)
-
-        while True:
-            try:
-                # self.sdk.get_state() # state may be older than latest frame
+            input("Press ENTER to initialise tracker:")
+            frame = self.sdk.get_latest_frame()
+            self.tracker.track(frame)
+            
+            control_i = 0
+            while self.sdk.video_thread.is_alive():
                 frame = self.sdk.get_latest_frame()
                 bounding_box = self.tracker.track(frame)
-                # command = self.control.control(self.sdk.state, (frame, bounding_box))
-                # self.sdk.send_command(command)
+                # if control_i % 10 == 0:  # send command every 10 frames
+                #     self.control.control((frame, bounding_box))
+                # control_i += 1
                 sleep(1 / self.video_rate)
-            except KeyboardInterrupt:
-                self.close()
+
+        except KeyboardInterrupt:
+            self.close()
 
 
 def main() -> None:
@@ -56,5 +58,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-
