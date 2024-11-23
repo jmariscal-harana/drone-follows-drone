@@ -2,7 +2,9 @@
 Welcome to my new drone project! I want to get a Tello drone to follow another Tello drone autonomously. While the idea is simple, there are many avenues to explore!
 
 # Project structure
-There are three different elements that I will work on in parallel: object tracking, drone control, and real-time.
+I am mostly following the structure from https://github.com/microsoft/python-package-template/.
+
+There are three different elements that I will work on in parallel: **object tracking**, **drone control**, and **real-time**.
 
 ## Object tracking
 - Traditional methods
@@ -36,7 +38,7 @@ You need to follow some of [these steps](https://stackoverflow.com/questions/753
 
 - Install XQuartz
 - Start XQuartz
-- Goto XQuartz- > Settings -> Security and select "Authenticate Connections" and "Allow connections from network clients"
+- Goto XQuartz- > Preferences -> Security and select "Authenticate Connections" and "Allow connections from network clients"
 - Restart XQuartz
 
 ```
